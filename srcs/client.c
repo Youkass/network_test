@@ -6,7 +6,7 @@
 /*   By: yobougre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:37:10 by yobougre          #+#    #+#             */
-/*   Updated: 2022/10/05 11:40:36 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/05 11:45:19 by yobougre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(void)
 {
 	t_server	client;
 	t_user		user;
-	char		msg[30];
+	char		msg[90];
 
 	client.socket = socket(AF_INET, SOCK_STREAM, 0);
 	client.addr.sin_addr.s_addr = inet_addr("10.12.7.1");
