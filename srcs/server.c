@@ -6,7 +6,7 @@
 /*   By: yobougre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:31:12 by yobougre          #+#    #+#             */
-/*   Updated: 2022/10/05 11:39:19 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/05 11:42:40 by yobougre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(void)
 	t_server	client;
 	socklen_t	csize;
 	t_user		user = {.name = "Arthur", .age = 42};
-	char		msg[]="Salut Archie, t'es beau aujourd'hui\n"
+	char		msg[]="Salut Archie, t'es beau aujourd'hui\n";
 
 	server.socket = socket(AF_INET, SOCK_STREAM, 0);
 	server.addr.sin_addr.s_addr = inet_addr("10.12.7.1");
