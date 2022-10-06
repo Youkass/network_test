@@ -6,7 +6,7 @@
 /*   By: denissereno <denissereno@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:31:18 by denissereno       #+#    #+#             */
-/*   Updated: 2022/10/05 13:25:15 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/05 18:44:55 by denissereno      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,20 @@ esc : 65307
 #ifndef INCLUDES_H
 # define INCLUDES_H
 
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netinet/in.h>
-# include <unistd.h>
-# include <netdb.h>
-# include <arpa/inet.h>
-# include <stdio.h>
-# include <string.h>
 # include <fcntl.h>
 # include <string.h>
+# include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <pthread.h>
+# include <netdb.h>
+# include <arpa/inet.h>
+# include <netinet/in.h>
 # include <unistd.h>
 # include "../mlx/mlx.h"
 # include <sys/time.h>
@@ -46,6 +45,7 @@ esc : 65307
 # define GAME 0
 # define MENU 1
 
+# define TH_RAY 10
 
 # define PI 3.14159 
 # define P2 (PI/2)

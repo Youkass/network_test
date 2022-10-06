@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasereno <dasereno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: denissereno <denissereno@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 13:26:11 by yobougre          #+#    #+#             */
-/*   Updated: 2022/10/03 18:22:12 by dasereno         ###   ########.fr       */
+/*   Updated: 2022/10/06 13:27:45 by denissereno      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	ft_give_id(void)
 		j = 0;
 		while (j < _img()->map_width)
 		{
-			if (_img()->coord_map[i][j].c == 'Z')
-				_img()->coord_map[i][j].id = VOID;
-			if (_img()->coord_map[i][j].c == '1')
-				_img()->coord_map[i][j].id = WALL;
-			if (_img()->coord_map[i][j].c == '0')
-				_img()->coord_map[i][j].id = MAP;
-			if (_img()->coord_map[i][j].c == 'P')
-				_img()->coord_map[i][j].id = PLAYER;
+			if (_var()->coord_map[i][j].c == 'Z')
+				_var()->coord_map[i][j].id = VOID;
+			if (_var()->coord_map[i][j].c == '1')
+				_var()->coord_map[i][j].id = WALL;
+			if (_var()->coord_map[i][j].c == '0')
+				_var()->coord_map[i][j].id = MAP;
+			if (_var()->coord_map[i][j].c == 'P')
+				_var()->coord_map[i][j].id = PLAYER;
 			++j;
 		}
 		++i;
@@ -100,13 +100,13 @@ int	ft_malloc_map(void)
 
 	i = 0;
 	ft_find_wall_scale();
-	_img()->coord_map = malloc(sizeof(t_obj *) * _img()->map_width);
-	if (!_img()->coord_map)
+	_var()->coord_map = malloc(sizeof(t_obj *) * _img()->map_width);
+	if (!_var()->coord_map)
 		return (1); //TODO call garbage collector
 	while (_img()->map[i])
 	{
-		_img()->coord_map[i] = ft_copy_map_line(_img()->map[i], i);
-		if (!_img()->coord_map[i])
+		_var()->coord_map[i] = ft_copy_map_line(_img()->map[i], i);
+		if (!_var()->coord_map[i])
 			return (1); //TODO call garbage collector
 		++i;
 	}
@@ -119,27 +119,7 @@ int	ft_malloc_map(void)
 The two following functions will draw square for the Wall obj and Floor obj
 ===============================================================================
 */
-void	ft_draw_wall(t_obj wall)
-{
-	t_int	var;
-
-	var.i = 0;
-	while (var.i < _img()->scale) 
-	{
-		var.j = 0;
-		while (var.j < _img()->scale)
-		{
-			ft_pixel_put(wall.x + var.i + MINIMAP_OFFSET, wall.y + var.j, 0x0000FF00);
-			if (var.j == 0 || var.j == _img()->scale - 1 || var.i == 0 ||
-			var.i == _img()->scale - 1)
-				ft_pixel_put(wall.x + var.i + MINIMAP_OFFSET, wall.y + var.j, 0x00000000);
-			var.j++;
-		}
-		var.i++;
-	}
-}
-
-void	ft_draw_floor(t_obj wall, t_vector2D pos)
+void	ft_draw_wall(t_obj wall, t_vector2D pos)
 {
 	t_int	var;
 
@@ -150,12 +130,32 @@ void	ft_draw_floor(t_obj wall, t_vector2D pos)
 		while (var.j < _img()->scale)
 		{
 			if (is_neighbor(pos))
-				ft_pixel_put(wall.x + var.i + MINIMAP_OFFSET, wall.y + var.j, 0x6b6b69);
+				ft_put_pixel_color(_img(), (char [4]){0, 89, 22, 0}, (int)wall.x + var.i + MINIMAP_OFFSET,  (int)wall.y + var.j);
 			else
-				ft_pixel_put(wall.x + var.i + MINIMAP_OFFSET, wall.y + var.j, 0xFFFFFF);
+				ft_put_pixel_color(_img(), (char [4]){0, 15, 255, 0}, (int)wall.x + var.i + MINIMAP_OFFSET,  (int)wall.y + var.j);
 			if (var.j == 0 || var.j == _img()->scale - 1 || var.i == 0 ||
 			var.i == _img()->scale - 1)
-				ft_pixel_put(wall.x + var.i + MINIMAP_OFFSET, wall.y + var.j, 0x00000000);
+				ft_put_pixel_color(_img(), (char [4]){0, 0, 0, 0}, wall.x + var.i + MINIMAP_OFFSET,  wall.y + var.j);
+			var.j++;
+		}
+		var.i++;
+	}
+}
+
+void	ft_draw_floor(t_obj wall)
+{
+	t_int	var;
+
+	var.i = 0;
+	while (var.i < _img()->scale) 
+	{
+		var.j = 0;
+		while (var.j < _img()->scale)
+		{
+			ft_put_pixel_color(_img(), (char [4]){255, 255, 255, 0}, (int)wall.x + var.i + MINIMAP_OFFSET, (int)wall.y + var.j);
+			if (var.j == 0 || var.j == _img()->scale - 1 || var.i == 0 ||
+			var.i == _img()->scale - 1)
+				ft_put_pixel_color(_img(), (char [4]){0, 0, 0, 0}, (int)wall.x + var.i + MINIMAP_OFFSET, (int)wall.y + var.j);
 			var.j++;
 		}
 		var.i++;
@@ -194,20 +194,19 @@ void	ft_draw_map(void)
 	t_vector2D	p_pos;
 
 	var.i = 0;
-	draw_rays();
 	while (var.i < _img()->map_height)
 	{
 		var.j = 0;
 		while (var.j < _img()->map_width)
 		{
-			if (_img()->coord_map[var.i][var.j].id == WALL)
-				ft_draw_wall(_img()->coord_map[var.i][var.j]);
-			if (_img()->coord_map[var.i][var.j].id == MAP)
-				ft_draw_floor(_img()->coord_map[var.i][var.j], (t_vector2D){var.j, var.i});
-			if (_img()->coord_map[var.i][var.j].id == PLAYER)
+			if (_var()->coord_map[var.i][var.j].id == WALL)
+				ft_draw_wall(_var()->coord_map[var.i][var.j], (t_vector2D){var.j, var.i});
+			if (_var()->coord_map[var.i][var.j].id == MAP)
+				ft_draw_floor(_var()->coord_map[var.i][var.j]);
+			if (_var()->coord_map[var.i][var.j].id == PLAYER)
 			{
 				p_pos = (t_vector2D){var.j, var.i};
-				ft_draw_floor(_img()->coord_map[p_pos.y][p_pos.x], (t_vector2D){var.j, var.i});
+				ft_draw_floor(_var()->coord_map[p_pos.y][p_pos.x]);
 			}
 			var.j++;
 		}

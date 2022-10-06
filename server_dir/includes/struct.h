@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasereno <dasereno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: denissereno <denissereno@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:30:30 by denissereno       #+#    #+#             */
-/*   Updated: 2022/10/06 13:19:10 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/06 14:40:57 by yobougre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include "includes.h" 
+# include <sys/time.h>
+# include <pthread.h>
+# include "includes.h"
 
 typedef struct	s_server
 {
@@ -57,23 +59,8 @@ typedef struct	s_hitbox
 {
 	t_circle	hit;
 	t_vector2D	nb[8];
+	int			n;
 }	t_hitbox;
-
-typedef struct	s_obj
-{
-	int			id;
-	float		x;
-	float		y;
-	char		c;
-	float		dx;
-	float		dy;
-	float		old_dx;
-	float		old_dy;
-	float		angle;
-	double		move_speed;
-	double		rot_speed;
-	t_hitbox	hb;
-}	t_obj;
 
 typedef struct s_int
 {
@@ -94,7 +81,6 @@ typedef struct s_data
 	void	*img;
 	char	*addr;
 	char	**map;
-	t_obj	**coord_map;
 	int		map_width;
 	int		map_height;
 	int		scale;
@@ -107,6 +93,25 @@ typedef struct s_data
 	int		width;
 	int		socket;
 }	t_data;
+
+typedef struct	s_obj
+{
+	int			id;
+	float		x;
+	float		y;
+	char		c;
+	float		dx;
+	float		dy;
+	float		old_dx;
+	float		old_dy;
+	float		angle;
+	double		move_speed;
+	double		rot_speed;
+	t_vector2F	plane;
+	t_vector2F	old_plane;
+	t_hitbox	hb;
+	t_data		sprite;
+}	t_obj;
 
 typedef struct s_enum_key
 {
@@ -131,8 +136,6 @@ typedef struct s_raycasting
 {
 	t_vector2D		step;
 	t_vector2D		map;
-	t_vector2F		plane;
-	t_vector2F		old_plane;
 	t_vector2FD		cam;
 	t_vector2FD		dir;
 	t_vector2FD		side_dist;
@@ -150,13 +153,29 @@ typedef struct s_raycasting
 	int				draw_end;
 	int				color;
 	double			perp_wall_dist;
-	struct timeval	clock;
-	unsigned long	time;
-	unsigned long	old_time;
-	double			frame_time;
 	int				max_y;
 	int				min_y;
+	t_obj			pl;
 }	t_raycasting;
+
+typedef struct s_spritecasting
+{
+	int			nb_sprites;
+	int			*sprite_order;
+	int			*sprite_dist;
+	t_vector2FD	pos;
+	double		inv_det;
+	t_vector2FD	trans;
+	int			sprite_screen_x;
+	t_vector2D	size;
+	t_vector2D	draw_start;
+	t_vector2D	draw_end;
+	int			stripe;
+	int			i;
+	t_vector2D	tex;
+	int			d;
+	int			color;
+}	t_spritecasting;
 
 typedef struct s_menu
 {
@@ -199,10 +218,19 @@ typedef struct s_key
 
 typedef struct s_var
 {
-	t_menu		*menu;
-	t_vector2D	m_pos;
-	int			mode;
-	t_key		key;
+	t_menu			*menu;
+	t_vector2D		m_pos;
+	int				mode;
+	t_key			key;
+	struct timeval	clock;
+	unsigned long	time;
+	unsigned long	old_time;
+	double			frame_time;
+	pthread_t		th[TH_RAY];
+	pthread_t		th_void[10];
+	t_obj			**coord_map;
+	t_obj			player2;
+	int				zbuffer[WIN_W];
 }	t_var;
 
 typedef struct s_player
@@ -210,5 +238,13 @@ typedef struct s_player
 	int	x;
 	int	y;
 }	t_player;
+
+typedef struct	s_nb
+{
+	int			i;
+	int			ret;
+	t_vector2F	nearest[2];
+	t_vector2F	potential;
+}	t_nb;
 
 #endif
