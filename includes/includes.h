@@ -6,7 +6,7 @@
 /*   By: yobougre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:26:13 by yobougre          #+#    #+#             */
-/*   Updated: 2022/10/04 13:27:44 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:43:24 by yobougre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 # include <arpa/inet.h>
 # include <stdio.h>
 # include <string.h>
+# include <stdlib.h>
 
 #endif

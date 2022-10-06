@@ -6,7 +6,7 @@
 /*   By: yobougre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:37:10 by yobougre          #+#    #+#             */
-/*   Updated: 2022/10/05 17:49:56 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/06 12:37:10 by yobougre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(void)
 	t_server	client;
 	t_user		user;
 	char		*msg;
-	char		fix_msg[90];
+	//char		fix_msg[90];
 	int			size;
 	
 	(void)user;
@@ -31,12 +31,12 @@ int	main(void)
 	recv(client.socket, &size, sizeof(size), 0);
 	printf("size : %d\n", size);
 	
-	recv(client.socket, &fix_msg, sizeof(fix_msg), 0);
-	printf("%s\n", fix_msg);
+//	recv(client.socket, &fix_msg, sizeof(fix_msg), 0);
+//	printf("%s\n", fix_msg);
 
-	msg = malloc(sizeof(char) * (strlen(fix_msg) + 1));
+	msg = malloc(sizeof(char) * (size + 1));
 	recv(client.socket, &msg, sizeof(msg), 0);
-	printf("%s\n", msg);
+	printf("msg : %s\n", msg);
 	close(client.socket);
 
 	return (0);
