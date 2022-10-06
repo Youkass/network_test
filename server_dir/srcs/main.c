@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: denissereno <denissereno@student.42.fr>    +#+  +:+       +#+        */
+/*   By: dasereno <dasereno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:29:24 by denissereno       #+#    #+#             */
-/*   Updated: 2022/10/06 14:40:15 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/06 17:47:45 by dasereno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ void	ft_init_server(void)
 	t_server	client;
 
 	server.socket = socket(AF_INET, SOCK_STREAM, 0);
-	server.addr.sin_addr.s_addr = inet_addr("10.12.6.1");
+	// server.addr.sin_addr.s_addr = inet_addr("10.12.6.1");
+	server.addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	server.addr.sin_family = AF_INET;
 	server.addr.sin_port = htons(30000);
 	bind(server.socket, (const struct sockaddr *)&(server.addr), sizeof(server.addr));
