@@ -6,7 +6,7 @@
 /*   By: yobougre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:37:10 by yobougre          #+#    #+#             */
-/*   Updated: 2022/10/07 11:53:48 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:04:13 by yobougre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	int			size;
 	
 	client.socket = socket(AF_INET, SOCK_STREAM, 0);
-	client.addr.sin_addr.s_addr = inet_addr("0.0.0.0");
+	client.addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	client.addr.sin_family = AF_INET;
 	client.addr.sin_port = htons(30000);
 	connect(client.socket, (const struct sockaddr *)&(client.addr), sizeof(client.addr));
