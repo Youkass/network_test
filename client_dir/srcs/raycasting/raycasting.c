@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: denissereno <denissereno@student.42.fr>    +#+  +:+       +#+        */
+/*   By: dasereno <dasereno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:55:08 by denissereno       #+#    #+#             */
-/*   Updated: 2022/10/06 00:21:25 by denissereno      ###   ########.fr       */
+/*   Updated: 2022/10/06 17:48:59 by dasereno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	init_ray(t_raycasting *r)
 {
 	r->draw_end = 0;
 	r->draw_start = 0;
-	r->cam.x = 2 * (r->x / (double)WIN_H - 0.8);
-	r->dir.x =  r->pl.dx + (r->pl.plane.x * r->cam.x);
-	r->dir.y =  r->pl.dy + (r->pl.plane.y * r->cam.x);
+	r->cam.x = 2 * r->x / (double)WIN_W - 1;
+	r->dir.x =  r->pl.dx + r->pl.plane.x * r->cam.x;
+	r->dir.y =  r->pl.dy + r->pl.plane.y * r->cam.x;
 	r->map = (t_vector2D){(r->pl.x + 0.5), (r->pl.y + 0.5)};
 	if (r->dir.y == 0)
 		r->delta.x = 0;

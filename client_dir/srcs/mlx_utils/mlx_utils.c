@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: denissereno <denissereno@student.42.fr>    +#+  +:+       +#+        */
+/*   By: dasereno <dasereno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 14:29:30 by yobougre          #+#    #+#             */
-/*   Updated: 2022/10/06 14:45:54 by yobougre         ###   ########.fr       */
+/*   Updated: 2022/10/06 17:42:49 by dasereno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,10 @@ int	ft_loop()
 	printf("other player.x : %f other player.y : %f\n", player.x, player.y);
 	_player2()->x = player.x;
 	_player2()->y = player.y;
+	printf("test\n");
 	player = ft_get_data(_player());
 	send(_img()->socket, &player, sizeof(player), 0);
+	printf("oui\n");
 	printf("my player.x : %f my player.y : %f\n", player.x, player.y);
 	draw_void_thread();
 	//ft_put_image_to_image(*_img(), _player()->sprite, (t_vector2D){500, 400});
